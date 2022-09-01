@@ -96,32 +96,23 @@ exports.modifyPost = (req, res, next) => {
         .then((post) => {
             // Enregistrement ancienne imgUrl (si nouvelle image dans modif)
             const oldUrl = post.imageUrl;
-            console.log()
+
+            const postObject = req.file ? {
+                ...req.body,
+                imageUrl: `${req.protocol}://${req.get('host')}/images/postImg/${req.file.filename}`
+            } : { ...req.body, imageUrl: oldUrl };
+
             if (req.file) {
 
-                fs.unlink(`./images/postImg/${oldUrl}`, () => {
+                let splitUrl = oldUrl.split("images/postImg/")[1];
 
-                    const postObject = {
-                        text: req.body.text,
-                        userId: req.body.userId,
-                        imageUrl: req.file.filename,
-                    };
+                fs.unlink(`./images/postImg/${splitUrl}`, () => {
 
                     // MAJ de la post avec données modifiées
                     Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
                         .then(() => res.status(200).json({ message: 'Post modifié !' }))
                         .catch(error => res.status(400).json({ error }));
                 });
-            } else {
-                const newItem = req.body;
-                newItem.imageUrl = oldUrl;
-                // MAJ de la post avec données modifiées
-                Post.updateOne(
-                    { _id: req.params.id, userId: req.body.userId },
-                    { ...newItem, imageUrl: oldUrl, _id: req.params.id }
-                )
-                    .then(() => res.status(200).json({ message: "Post mise à jour!" }))
-                    .catch((error) => res.status(400).json({ error }));
             }
         })
         .catch((error) => res.status(500).json({ error }));
