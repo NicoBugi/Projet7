@@ -69,54 +69,87 @@ exports.login = async (req, res, next) => {
 }
 
 
+// /* Controleur modify */
+// exports.modifyUser = async (req, res, next) => {
+//     // Recup post avec id
+
+//     User.findOne({ _id: req.params.userId })
+//         .then(async (user) => {
+//             // Enregistrement ancienne imgUrl (si nouvelle image dans modif)
+//             const oldUrl = user.imageUrl;
+//             const salt = await bcrypt.genSalt();
+//             const hashPassword = await bcrypt.hash(req.body.password, salt);
+
+//             if (req.file) {
+
+//                 fs.unlink(`./images/userImg/${oldUrl}`, () => {
+
+//                     const userObject = {
+//                         presentation: req.body.presentation,
+//                         email: req.body.email,
+//                         password: hashPassword,
+//                         nom: req.body.nom,
+//                         prenom: req.body.prenom,
+//                         imageUrl: req.file.filename,
+//                     };
+//                     console.log(userObject)
+//                     // MAJ du user avec données modifiées
+//                     User.updateOne({ _id: req.params.userId }, { ...userObject, _id: req.params.userId })
+//                         .then(() => res.status(200).json({ message: 'User modifié !' }))
+//                         .catch(error => res.status(400).json({ error }));
+//                 });
+//             } else {
+//                 console.log(req.body)
+//                 const newItem = req.body;
+//                 newItem.imageUrl = oldUrl;
+
+//                 // MAJ de la post avec données modifiées
+//                 User.updateOne(
+//                     { _id: req.params.userId },
+//                     {
+//                         presentation: req.body.presentation,
+//                         email: req.body.email,
+//                         password: hashPassword,
+//                         nom: req.body.nom,
+//                         prenom: req.body.prenom,
+//                         imageUrl: oldUrl,
+//                     }
+//                 )
+//                     .then(() => res.status(200).json({ message: "User mis à jour!" }))
+//                     .catch((error) => res.status(400).json({ error }));
+//             }
+//         })
+//         .catch((error) => res.status(500).json({ error }));
+// };
+
+
+
 /* Controleur modify */
 exports.modifyUser = async (req, res, next) => {
-    // Recup post avec id
 
     User.findOne({ _id: req.params.userId })
         .then(async (user) => {
-            // Enregistrement ancienne imgUrl (si nouvelle image dans modif)
+
             const oldUrl = user.imageUrl;
             const salt = await bcrypt.genSalt();
             const hashPassword = await bcrypt.hash(req.body.password, salt);
 
+            const UserObject = req.file ? {
+                ...req.body,
+                password: hashPassword,
+                imageUrl: `${req.protocol}://${req.get('host')}/images/userImg/${req.file.filename}`
+            } : { ...req.body, password: hashPassword, imageUrl: oldUrl };
+
             if (req.file) {
 
-                fs.unlink(`./images/userImg/${oldUrl}`, () => {
+                let splitUrl = oldUrl.split("images/userImg/")[1];
 
-                    const userObject = {
-                        presentation: req.body.presentation,
-                        email: req.body.email,
-                        password: hashPassword,
-                        nom: req.body.nom,
-                        prenom: req.body.prenom,
-                        imageUrl: req.file.filename,
-                    };
-                    console.log(userObject)
-                    // MAJ du user avec données modifiées
-                    User.updateOne({ _id: req.params.userId }, { ...userObject, _id: req.params.userId })
+                fs.unlink(`./images/userImg/${splitUrl}`, () => {
+
+                    User.updateOne({ _id: req.params.userId }, { ...UserObject, _id: req.params.userId })
                         .then(() => res.status(200).json({ message: 'User modifié !' }))
                         .catch(error => res.status(400).json({ error }));
-                });
-            } else {
-
-                const newItem = req.body;
-                newItem.imageUrl = oldUrl;
-
-                // MAJ de la post avec données modifiées
-                User.updateOne(
-                    { _id: req.params.userId },
-                    {
-                        presentation: req.body.presentation,
-                        email: req.body.email,
-                        password: hashPassword,
-                        nom: req.body.nom,
-                        prenom: req.body.prenom,
-                        imageUrl: oldUrl,
-                    }
-                )
-                    .then(() => res.status(200).json({ message: "User mis à jour!" }))
-                    .catch((error) => res.status(400).json({ error }));
+                })
             }
         })
         .catch((error) => res.status(500).json({ error }));
