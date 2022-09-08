@@ -2,7 +2,7 @@
 const express = require("express");
 const postRoutes = require("./routes/postRoutes");
 const userRoutes = require("./routes/userRoutes");
-const refreshRoutes = require("./routes/userRoutes");
+const refreshRoutes = require("./routes/refreshRoutes");
 const path = require("path");
 
 /* Initialisation de l'API */
