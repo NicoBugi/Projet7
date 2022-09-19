@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken")
 const Users = require("../models/userModel.js")
 
-export const refreshToken = async (req, res) => {
+exports.refreshToken = async (req, res) => {
     try {
         const refreshToken = req.cookies.refreshToken;
         if (!refreshToken) return res.sendStatus(401);
@@ -17,8 +17,8 @@ export const refreshToken = async (req, res) => {
             const prenom = user[0].prenom;
             const userImg = user[0].userImg;
             const email = user[0].email;
-            const isAdmin = user[0].isAdmin;
-            const accessToken = jwt.sign({ userId, nom, prenom, userImg, email, isAdmin }, process.env.ACCESS_TOKEN_SECRET, {
+            const role = user[0].role;
+            const accessToken = jwt.sign({ userId, nom, prenom, userImg, email, role }, process.env.ACCESS_TOKEN_SECRET, {
                 expiresIn: '1h'
             });
             res.json({ accessToken });

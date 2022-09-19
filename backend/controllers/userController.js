@@ -5,29 +5,51 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config({ encoding: "latin1" });
 const fs = require("fs");
 
+exports.getAllUser = (req, res, next) => {
+    User.find()
+        .then((users) => {
+            res.status(200).json(users);
+        })
+        .catch((error) => {
+            res.status(400).json({
+                error: error,
+            });
+        });
+};
 
+exports.getOneUser = async (req, res, next) => {
+    // Recup user avec id
+
+    const user = await Users.findOne({
+        where: { id: user.userId },
+    });
+
+    res.send(user);
+};
 
 /* Controleur inscription */
 exports.signup = async (req, res, next) => {
-    const { nom, prenom, email, password, confPassword } = req.body;
-    if (password !== confPassword) return res.status(400).json({ msg: "Veuillez confirmer le mot de passe" });
+    console.log(req.body)
     User.findOne({ email: req.body.email }, async function (err, emailExists) {
         if (!emailExists) {
             const salt = await bcrypt.genSalt();
-            const hashPassword = await bcrypt.hash(password, salt);
-            try {
-                await User.create({
-                    nom: nom,
-                    prenom: prenom,
-                    imageUrl: "./images/userImg/Capture.PNG1661607545026.png",
-                    presentation: "ahahahhahah",
-                    email: email,
-                    password: hashPassword
-                });
-                res.json({ msg: "Inscription réussie" });
-            } catch (error) {
-                console.log(error);
-            }
+
+            bcrypt.hash(req.body.password, salt, async (err, hash) => {
+                try {
+                    await User.create({
+                        nom: req.body.nom,
+                        prenom: req.body.prenom,
+                        imageUrl: req.body.imageUrl,
+                        presentation: req.body.presentation,
+                        email: req.body.email,
+                        password: hash,
+                        role: req.body.role
+                    });
+                    res.json({ msg: "Inscription réussie" });
+                } catch (error) {
+                    console.log(error);
+                }
+            })
         } else {
             return res.status(400).json({ msg: "Cette adresse email existe déjà" });
         }
