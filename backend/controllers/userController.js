@@ -20,8 +20,8 @@ exports.getAllUser = (req, res, next) => {
 exports.getOneUser = async (req, res, next) => {
     // Recup user avec id
 
-    const user = await Users.findOne({
-        where: { id: user.userId },
+    const user = await User.findOne({
+        where: { id: req.params.userId },
     });
 
     res.send(user);

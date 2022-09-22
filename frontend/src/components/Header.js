@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import './header.css'
 import Logo from '@/Images/icon-left-font.png'
 import { accountService } from "@/_services/account.service";
-import { tokenService } from '../_services/token.service';
-import { LoginContext } from '@/_utils/Context';
+// import { LoginContext } from '@/_utils/Context';
 
 
 
@@ -14,10 +13,10 @@ import { LoginContext } from '@/_utils/Context';
 const Header = () => {
     useEffect(() => {
     })
-    const { Logon } = useContext(LoginContext)
+    // const { Logon } = useContext(LoginContext)
 
-    if (Logon === 'Logon') {
-        const token = tokenService.tokenDecode(accountService.getToken())
+    if (accountService.isLogged()) {
+        const token = accountService.tokenDecode(accountService.getToken())
         return (
 
             <header>
@@ -26,7 +25,7 @@ const Header = () => {
                 </div>
                 <nav>
                     <ul>
-                        <li><Link to="/user">{token.nom + ' ' + token.prenom}</Link></li>
+                        <li>{token.nom + ' ' + token.prenom}</li>
                         <li onClick={accountService.logout}><Link to="/auth/login">Logout</Link></li>
                     </ul>
                     {/* <button onClick={accountService.logout()}><Link to="/auth/login">Logout</Link></button> */}

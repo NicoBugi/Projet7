@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import './form.css'
 import * as Yup from "yup";
 import { accountService } from "@/_services/account.service"
-import { LoginContext } from '@/_utils/Context';
+// import { LoginContext } from '@/_utils/Context';
 
 
 const Login = () => {
@@ -24,7 +24,7 @@ const Login = () => {
         email: Yup.string().email("Veuillez entrer une adresse email valide").required("Veuillez entrer votre adresse email"),
         password: Yup.string().required("Veuillez entrer un mot de passe")
     });
-    const { Logon } = useContext(LoginContext)
+    // const { Logon } = useContext(LoginContext)
 
 
     const onSubmit = async (data) => {
@@ -35,7 +35,7 @@ const Login = () => {
                 .then(response => {
                     accountService.saveToken(response.data.accessToken)
                     navigate("/home", { replace: true });
-                    { Logon === 'Logon' }
+                    // { Logon === 'Logon' }
                 })
                 .catch(error => {
                     setMsg(error);

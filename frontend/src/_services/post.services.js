@@ -8,8 +8,8 @@ let getPost = (post) => {
     return Axios.get('/api/posts/' + post.id)
 }
 
-let createPost = () => {
-    return Axios.post('/api/posts')
+let createPost = (data) => {
+    return Axios.post('/api/posts', data)
 }
 let deletePost = (post) => {
     return Axios.delete('/api/posts/' + post.id)
@@ -22,7 +22,7 @@ let modifyPost = (post) => {
     return Axios.put('/api/posts/' + post.id)
 }
 
-export const userService = {
+export const postService = {
     getAllPosts,
     getPost,
     createPost,

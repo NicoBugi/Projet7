@@ -14,8 +14,8 @@ let updateUser = (user) => {
     return Axios.patch('/api/auth/modify/' + user.id)
 }
 
-let signupUser = () => {
-    return Axios.post('/api/auth/signup')
+let signupUser = (data) => {
+    return Axios.post('/api/auth/signup', data)
 }
 
 export const userService = {

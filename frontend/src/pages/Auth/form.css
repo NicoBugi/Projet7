@@ -1,26 +1,15 @@
 Form {
     display: grid;
-    grid-template-columns: 1fr 4fr;
     grid-row-gap: 20px;
     margin-top: 30px;
     margin-left: 35%;
     margin-right: 35%;
 }
 
-label {
-    grid-column: 1/1;
-    text-align: left;
+label {}
 
-}
-
-.champ {
-    grid-column: 2/2;
-    border-radius: 10px;
-
-}
 
 button {
-    grid-column: 1/3;
     margin-left: 25%;
     margin-right: 25%;
     justify-items: center;

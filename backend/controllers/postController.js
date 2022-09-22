@@ -6,6 +6,8 @@ const fs = require("fs");
 
 /* Controleur creation post */
 exports.createPost = async (req, res, next) => {
+    console.log(req.body)
+
     try {
         const userId = req.body.userId;
 
