@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'
 
-import { Home, Addpost, Profil, Modifypost } from '@/pages/Public'
+import { Home, Addpost, Modifypost } from '@/pages/Public'
 import Error from '@/_utils/Error'
 
 const PublicRouter = () => {
@@ -10,7 +10,6 @@ const PublicRouter = () => {
         <Routes>
             <Route path="home" element={<Home />} />
             <Route path="addpost" element={<Addpost />} />
-            <Route path="profil" element={<Profil />} />
             <Route path="modifypost" element={<Modifypost />} />
             <Route path="*" element={<Error />} />
 

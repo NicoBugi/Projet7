@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { userService } from "@/_services/user.service";
 import { accountService } from '@/_services/account.service';
 
 const Signup = () => {
@@ -33,12 +32,12 @@ const Signup = () => {
     const onSubmit = (data) => {
 
         try {
-            userService.signupUser(data)
+            accountService.signupUser(data)
                 .then(response => {
                     accountService.loginUser(data)
                         .then(response => {
                             accountService.saveToken(response.data.accessToken)
-                            navigate("/auth/login", { replace: true });
+                            navigate("../../home", { replace: true });
                         })
                         .catch(error => {
                             setMsg(error);

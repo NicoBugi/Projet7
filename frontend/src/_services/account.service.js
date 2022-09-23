@@ -29,12 +29,26 @@ let isLogged = () => {
     return !!token
 }
 
+let getAllUsers = () => {
+    return Axios.get('/api/auth/')
+}
+
+let updateUser = (user) => {
+    return Axios.patch('/api/auth/modify/' + user.id)
+}
+
+let signupUser = (data) => {
+    return Axios.post('/api/auth/signup', data)
+}
+
 export const accountService = {
     loginUser,
     logout,
     saveToken,
     getToken,
     isLogged,
-    tokenDecode
+    tokenDecode,
+    getAllUsers,
+    signupUser
 }
 

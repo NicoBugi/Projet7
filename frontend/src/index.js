@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 export * from '@/_services/account.service'
-export * from '@/_services/user.service'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

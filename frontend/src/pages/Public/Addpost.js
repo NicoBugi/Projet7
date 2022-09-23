@@ -23,7 +23,6 @@ const Addpost = () => {
     }
     const onSubmit = async (data) => {
         const profil = accountService.tokenDecode(accountService.getToken())
-        console.log(profil)
 
         const formData = new FormData();
         formData.append('imageUrl', postImg);
@@ -47,9 +46,6 @@ const Addpost = () => {
     };
 
     const onImageChange = async (event) => {
-        if (event.target.files && event.target.files[0]) {
-            // setImagePreview(URL.createObjectURL(event.target.files[0]));
-        }
         try {
             const { width, height } = await reactImageSize(URL.createObjectURL(event.target.files[0]));
             if (width <= 10000 && height <= 10000) {

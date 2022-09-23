@@ -17,15 +17,6 @@ exports.getAllUser = (req, res, next) => {
         });
 };
 
-exports.getOneUser = async (req, res, next) => {
-    // Recup user avec id
-
-    const user = await User.findOne({
-        where: { id: req.params.userId },
-    });
-
-    res.send(user);
-};
 
 /* Controleur inscription */
 exports.signup = async (req, res, next) => {
@@ -66,12 +57,13 @@ exports.login = async (req, res, next) => {
             const userId = user._id;
             const nom = user.nom;
             const prenom = user.prenom;
-            const userImg = user.userImg;
+            const imageUrl = user.imageUrl;
             const email = user.email;
-            const accessToken = jwt.sign({ userId, nom, prenom, userImg, email }, process.env.ACCESS_TOKEN_SECRET, {
+            const role = user.role;
+            const accessToken = jwt.sign({ userId, nom, prenom, imageUrl, email, role }, process.env.ACCESS_TOKEN_SECRET, {
                 expiresIn: '1d'
             });
-            const refreshToken = jwt.sign({ userId, nom, prenom, userImg, email }, process.env.REFRESH_TOKEN_SECRET, {
+            const refreshToken = jwt.sign({ userId, nom, prenom, imageUrl, email }, process.env.REFRESH_TOKEN_SECRET, {
                 expiresIn: '1d'
             });
             await User.updateOne({ refresh_token: refreshToken }, {

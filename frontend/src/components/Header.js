@@ -1,9 +1,9 @@
-import React, { useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './header.css'
 import Logo from '@/Images/icon-left-font.png'
 import { accountService } from "@/_services/account.service";
-// import { LoginContext } from '@/_utils/Context';
+
 
 
 
@@ -11,9 +11,12 @@ import { accountService } from "@/_services/account.service";
 
 
 const Header = () => {
+    const navigate = useNavigate()
     useEffect(() => {
     })
-    // const { Logon } = useContext(LoginContext)
+    const addPost = () => {
+        navigate("/addpost", { replace: true })
+    }
 
     if (accountService.isLogged()) {
         const token = accountService.tokenDecode(accountService.getToken())
@@ -23,12 +26,12 @@ const Header = () => {
                 <div className='logo'>
                     <Link to="/home"> <img src={Logo} alt="groupomania"></img></Link>
                 </div>
+                <ul><button onClick={addPost}>Ajouter un post</button></ul>
                 <nav>
                     <ul>
                         <li>{token.nom + ' ' + token.prenom}</li>
                         <li onClick={accountService.logout}><Link to="/auth/login">Logout</Link></li>
                     </ul>
-                    {/* <button onClick={accountService.logout()}><Link to="/auth/login">Logout</Link></button> */}
                 </nav>
             </header>
 

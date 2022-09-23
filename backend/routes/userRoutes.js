@@ -10,7 +10,6 @@ router.post("/signup", userCtrl.signup);
 router.post("/login", userCtrl.login);
 router.patch("/modify/:userId", auth, multer, userCtrl.modifyUser);
 router.get("/", userCtrl.getAllUser);
-router.get("/:userId", auth, userCtrl.getOneUser);
 
 
 module.exports = router;
