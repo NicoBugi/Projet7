@@ -59,11 +59,13 @@ exports.login = async (req, res, next) => {
             const prenom = user.prenom;
             const imageUrl = user.imageUrl;
             const email = user.email;
+            const presentation = user.presentation;
             const role = user.role;
-            const accessToken = jwt.sign({ userId, nom, prenom, imageUrl, email, role }, process.env.ACCESS_TOKEN_SECRET, {
+            const createdAt = user.createdAt;
+            const accessToken = jwt.sign({ userId, nom, prenom, imageUrl, email, presentation, role, createdAt }, process.env.ACCESS_TOKEN_SECRET, {
                 expiresIn: '1d'
             });
-            const refreshToken = jwt.sign({ userId, nom, prenom, imageUrl, email }, process.env.REFRESH_TOKEN_SECRET, {
+            const refreshToken = jwt.sign({ userId, nom, prenom, imageUrl, email, presentation, role, createdAt }, process.env.REFRESH_TOKEN_SECRET, {
                 expiresIn: '1d'
             });
             await User.updateOne({ refresh_token: refreshToken }, {

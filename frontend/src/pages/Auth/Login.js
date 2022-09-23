@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import './form.css'
 import * as Yup from "yup";
 import { accountService } from "@/_services/account.service"
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { postService } from '@/_services/post.services';
 import { accountService } from '@/_services/account.service';
 import TimeAgo from 'timeago-react';
@@ -12,13 +12,18 @@ const Home = () => {
     const [allposts, setAllpost] = useState([]);
     const [profil, setProfil] = useState([]);
     const [alluser, setAlluser] = useState([]);
+    const flag = useRef(false)
 
 
     useEffect(() => {
-        FunctionProfil();
-        FunctionAllPosts();
-        FunctionAllUser();
-    })
+        if (flag.current === false) {
+            FunctionProfil();
+            FunctionAllPosts();
+            FunctionAllUser();
+        }
+
+        return () => flag.current = true
+    }, [])
 
     const FunctionProfil = async () => {
         const profil = accountService.tokenDecode(accountService.getToken());
@@ -27,59 +32,83 @@ const Home = () => {
 
     const FunctionAllPosts = async () => {
         let allPosts = await postService.getAllPosts();
-        setAllpost(allPosts);
+        setAllpost(allPosts.data);
     }
 
     const FunctionAllUser = async () => {
-        const Alluser = accountService.getAllUsers();
-        setAlluser(Alluser);
+        const Alluser = await accountService.getAllUsers();
+        setAlluser(Alluser.data);
     }
-
 
 
     const LastSeen = (date) => {
         return (<TimeAgo datetime={date} locale='fr' />);
     }
 
+    console.log(profil.presentation)
+
     return (
         <>
             <div>
                 <main>
-                    <section className='Profil'></section> {/*section a gauche*/}
-                    <section className='Post'>  {/*section du milieu*/}
-
-                    </section>
-                    <section className='alluser'></section> {/*section a droite*/}
-                </main>
-            </div>
-
-            {/* <section className="tousLesMessages mt-5"> */}
-            {/* {AllPosts.map((post, index) => {
-                    return (
-                        <div key={index} className="card mb-5">
-                            <div className="card-content">
-                                <div className="media">
-                                    <div className="media-left">
-                                        <figure className="image is-48x48">
-                                            <img className="userImg is-rounded" src={'../images/profilepictures/' + post.user.userImg} alt='pp' />
+                    <div className="columns">
+                        <section className="column is-one-third">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="content">
+                                        <h2 className="name" key={profil.nom}>{profil.nom} {profil.prenom}</h2>
+                                        <figure class="image is-128x128">
+                                            <img class="is-rounded" key={profil.imageUrl} src={profil.imageUrl} />
                                         </figure>
-                                    </div>
-                                    <div className="media-content">
+                                        <div className="renseignement">
+                                            <h3 className="bio">Biographie</h3>
+                                            <p key={profil.presentation}>{profil.presentation} </p>
+                                            <br />
 
-                                        <p className="is-size-7 has-text-grey">{LastSeen(post.createdAt)}</p>
+                                            <h3 className="email">email</h3>
+                                            <p key={profil.email}>{profil.email}</p>
+                                            <br />
+
+                                            <h3 className="inscription">Inscription</h3>
+                                            <p key={profil.createdAt}>{LastSeen(profil.createdAt)}</p>
+                                            <br />
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="content">
-                                    <p>{post.postMsg}</p>
-                                    <img src={post.postImg} alt="" /> */}
-
-            {/* {isAdmin == 1 ? (<button type='button' className="button is-pulled-right is-danger is-outlined" onClick={() => { deletePost(post.id) }}>Supprimer</button>) : ('')} */}
-            {/* </div>
                             </div>
-                        </div>
-                    )
-                })}
-            </section> */}
+
+                        </section>
+
+
+                        <section className="column is-one-third">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="content">
+                                        Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
+                                    </div>
+                                </div>
+                            </div>
+
+                        </section>
+
+                        <section className="column is-one-third">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="content">
+                                        Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
+                                    </div>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+
+
+
+
+
+                </main>
+            </div >
         </>
     );
 };
