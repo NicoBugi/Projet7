@@ -15,6 +15,8 @@ function App() {
           <Route element={<Layout />}>
             <Route index element={<AuthRouter />} />
             <Route path="auth/*" element={<AuthRouter />} />
+          </Route>
+          <Route element={<Layout />}>
             <Route path="/*" element={
               <AuthGuard>
                 <PublicRouter />

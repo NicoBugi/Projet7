@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { userService } from "@/_services/user.service";
-import { accountService } from '../../_services/account.service';
+import { accountService } from '@/_services/account.service';
 
 const Signup = () => {
     const [msg, setMsg] = useState('');

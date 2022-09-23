@@ -29,6 +29,35 @@ const Home = () => {
 
     // console.log(allPosts())
 
+    class diplayPost extends React.Component {
+        render() {
+            return (
+                <div key={post.index} className="card mb-5">
+                    <div className="card-content">
+                        <div className="media">
+                            <div className="media-left">
+                                <figure className="image is-48x48">
+                                    <img className="userImg is-rounded" src={'../images/profilepictures/' + post.user.userImg} alt='pp' />
+                                </figure>
+                            </div>
+                            <div className="media-content">
+
+                                <p className="is-size-7 has-text-grey">{LastSeen(post.createdAt)}</p>
+                            </div>
+                        </div>
+                        <div className="content">
+                            <p>{post.postMsg}</p>
+                            <img src={post.postImg} alt="" />
+
+                            {/* {isAdmin == 1 ? (<button type='button' className="button is-pulled-right is-danger is-outlined" onClick={() => { deletePost(post.id) }}>Supprimer</button>) : ('')} */}
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    }
+
+
     const user = async () => {
         const posts = await allPosts()
         for (let post of posts) {
@@ -67,33 +96,9 @@ const Home = () => {
                 </main>
             </div>
 
-            <section className="tousLesMessages mt-5">
-                {allPosts.map((post, index) => {
-                    return (
-                        <div key={index} className="card mb-5">
-                            <div className="card-content">
-                                <div className="media">
-                                    <div className="media-left">
-                                        <figure className="image is-48x48">
-                                            <img className="userImg is-rounded" src={'../images/profilepictures/' + post.user.userImg} alt='pp' />
-                                        </figure>
-                                    </div>
-                                    <div className="media-content">
-
-                                        <p className="is-size-7 has-text-grey">{LastSeen(post.createdAt)}</p>
-                                    </div>
-                                </div>
-                                <div className="content">
-                                    <p>{post.postMsg}</p>
-                                    <img src={post.postImg} alt="" />
-
-                                    {/* {isAdmin == 1 ? (<button type='button' className="button is-pulled-right is-danger is-outlined" onClick={() => { deletePost(post.id) }}>Supprimer</button>) : ('')} */}
-                                </div>
-                            </div>
-                        </div>
-                    )
-                })}
-            </section>
+            {/* <section className="tousLesMessages mt-5">
+                
+            </section> */}
         </>
     );
 };

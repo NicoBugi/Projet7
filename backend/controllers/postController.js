@@ -36,8 +36,21 @@ exports.createPost = async (req, res, next) => {
 /* Controleur recuperation all posts */
 exports.getAllPost = (req, res, next) => {
     Post.find()
-        .then((posts) => {
-            res.status(200).json(posts);
+        .then(async (posts) => {
+            let postArray = [];
+
+            for (let i = 0; i < posts.length; i++) {
+
+                const GetUser = await Users.findOne({ _id: posts[i].userId })
+
+                postArray.push({
+                    post: posts[i],
+                    user: GetUser
+                })
+            }
+
+            res.status(200).json(postArray);
+
         })
         .catch((error) => {
             res.status(400).json({
@@ -49,13 +62,9 @@ exports.getAllPost = (req, res, next) => {
 /* Controleur recuperation 1 post */
 exports.getOnePost = async (req, res, next) => {
     // Recup post avec id
-    const post = await Post.findOne({
-        where: { id: req.params.id },
-    });
+    const post = await Post.findOne({ _id: req.params.id });
 
-    const user = await Users.findOne({
-        where: { id: post.userId },
-    });
+    const user = await Users.findOne({ _id: post.userId });
 
     let PostCompiled = {
         post: post,
