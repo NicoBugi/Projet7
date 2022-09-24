@@ -12,10 +12,7 @@ const PublicRouter = () => {
             <Route path="addpost" element={<Addpost />} />
             <Route path="modifypost" element={<Modifypost />} />
             <Route path="*" element={<Error />} />
-
         </Routes>
-
-
 
     );
 };

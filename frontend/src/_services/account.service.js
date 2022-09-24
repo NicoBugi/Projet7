@@ -7,9 +7,16 @@ let tokenDecode = (token) => {
     return decode
 }
 
+let getAllUsers = () => {
+    return Axios.get('/api/auth/')
+}
 
-let loginUser = (credentials) => {
-    return Axios.post('/api/auth/login', credentials)
+let loginUser = (data) => {
+    return Axios.post('/api/auth/login', data)
+}
+
+let signupUser = (data) => {
+    return Axios.post('/api/auth/signup', data)
 }
 
 let logout = () => {
@@ -29,18 +36,6 @@ let isLogged = () => {
     return !!token
 }
 
-let getAllUsers = () => {
-    return Axios.get('/api/auth/')
-}
-
-let updateUser = (user) => {
-    return Axios.patch('/api/auth/modify/' + user.id)
-}
-
-let signupUser = (data) => {
-    return Axios.post('/api/auth/signup', data)
-}
-
 export const accountService = {
     loginUser,
     logout,
@@ -48,7 +43,7 @@ export const accountService = {
     getToken,
     isLogged,
     tokenDecode,
-    getAllUsers,
-    signupUser
+    signupUser,
+    getAllUsers
 }
 

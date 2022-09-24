@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createElement, useRef, useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from 'react-router-dom';
 import { accountService } from "@/_services/account.service";
@@ -9,6 +9,7 @@ const Addpost = () => {
     const [msg, setMsg] = useState('');
     const [postImg, setPostImg] = useState();
     const navigate = useNavigate();
+    const flag = useRef(false)
 
     const initialValues = {
         title: "",
@@ -16,14 +17,19 @@ const Addpost = () => {
     }
 
     useEffect(() => {
-    })
+        if (flag.current === false) {
+
+        }
+
+        return () => flag.current = true
+    }, [])
 
     const retour = () => {
         navigate("/home", { replace: true })
     }
+
     const onSubmit = async (data) => {
         const profil = accountService.tokenDecode(accountService.getToken())
-
         const formData = new FormData();
         formData.append('imageUrl', postImg);
         formData.append('text', data.text);
@@ -63,32 +69,76 @@ const Addpost = () => {
 
     return (
         <>
-            <button onClick={retour}>Précédent</button>
-            <div className="message is-dark">
-                <h2 className="message-header has-background-link">Ajouter un post</h2>
-                <div className="message-body">
-                    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-                        <Form>
-                            {msg ? (<p className="notification is-danger is-size-6 p-2 mt-1">{msg}</p>) : ("")}
-                            <div className="field">
-                                <label htmlFor='image' className="label">Post Image:</label>
-                                <div className="controls">
-                                    <input name='postImg' type="file" onChange={onImageChange} />
-                                </div>
-                                <ErrorMessage name="title" component="p" className="notification is-danger is-light p-2 mt-1" />
-                            </div>
-                            <div className="field">
-                                <label htmlFor='text' className="label">Texte:</label>
-                                <div className="controls">
-                                    <Field name="text" type="text" placeholder="text" autoComplete="off" className="input"></Field>
-                                </div>
-                                <ErrorMessage name="text" component="p" className="notification is-danger is-light p-2 mt-1" />
-                            </div>
-                            <button type='submit' className="button is-link is-outlined mt-2">Envoyer</button>
-                        </Form>
-                    </Formik>
+            <main>
+                <div class="columns columnsMain">
+                    <div class="column is-one-fifth">
+                        <nav class="breadcrumb" aria-label="breadcrumbs">
+                            <ul>
+                                <li class="is-active">
+                                    <a href="#">
+                                        <span>Post</span>
+                                    </a>
+                                </li>
+                                <li><a onClick={retour} >
+                                    Précédent
+                                </a></li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                    <div class="column"></div>
                 </div>
-            </div>
+                <div class="columns">
+                    <div class="column"></div>
+                    <div class="column is-half">
+                        <div class="box">
+                            <div className="message has-background-white">
+                                <h2 className="message-header has-background-danger">Ajouter un Post</h2>
+
+                                <Formik initialValues={initialValues} onSubmit={onSubmit}>
+                                    <Form>
+                                        {msg ? (<p className="notification is-danger is-size-6 p-2 mt-1">{msg}</p>) : ("")}
+                                        <div className="field">
+                                            <label htmlFor='image' className="label">Image du Post:</label>
+                                            <div class="file is-danger">
+                                                <label class="file-label">
+                                                    <input class="file-input" type="file" name="resume" onChange={onImageChange} />
+                                                    <span class="file-cta">
+                                                        <span class="file-icon">
+                                                            <i class="fas fa-upload"></i>
+                                                        </span>
+                                                        <span class="file-label">
+                                                            Choose a file…
+                                                        </span>
+                                                    </span>
+                                                </label>
+
+                                            </div>
+                                            <ErrorMessage name="title" component="p" className="notification is-danger is-light p-2 mt-1" />
+                                        </div>
+
+                                        <div className="field">
+                                            <label htmlFor='text' className="label">Texte:</label>
+                                            <div className="controls">
+                                                <Field name="text" type="text" placeholder="text" autoComplete="off" className="input"></Field>
+                                            </div>
+                                            <ErrorMessage name="text" component="p" className="notification is-danger is-light p-2 mt-1" />
+                                        </div>
+
+                                        <div class="columns">
+                                            <div class="column"></div>
+                                            <div class="column"><button type='submit' className="button is-danger is-outlined">Connexion</button></div>
+                                            <div class="column"></div>
+                                        </div>
+                                    </Form>
+                                </Formik>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column"></div>
+                </div>
+
+            </main>
         </>
     );
 }

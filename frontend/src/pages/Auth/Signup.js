@@ -13,8 +13,6 @@ const Signup = () => {
         prenom: "",
         password: "",
         email: "",
-
-
     };
 
     useEffect(() => {
@@ -26,8 +24,6 @@ const Signup = () => {
         email: Yup.string().email("Veuillez entrer une adresse email valide").required("Veuillez entrer votre adresse email"),
         password: Yup.string().required("Veuillez entrer un mot de passe")
     });
-
-
 
     const onSubmit = (data) => {
 
@@ -56,45 +52,63 @@ const Signup = () => {
     };
     return (
         <>
-            <div className="message is-dark">
-                <h2 className="message-header has-background-link">S'inscrire</h2>
-                <div className="message-body">
-                    <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-                        <Form>
-                            {msg ? (<p className="notification is-danger is-size-6 p-2 mt-1">{msg}</p>) : ("")}
-                            <div className="field">
-                                <label htmlFor='nom' className="label">Nom:</label>
-                                <div className="controls">
-                                    <Field name="nom" type="text" placeholder="Nom" autoComplete="off" className="input"></Field>
-                                </div>
-                                <ErrorMessage name="nom" component="p" className="notification is-danger is-light p-2 mt-1" />
+            <main>
+                <div class="columns columnsMain">
+                    <div class="column"></div>
+                    <div class="column is-half">
+                        <div class="box">
+                            <div className="message has-background-white">
+                                <h2 className="message-header has-background-danger">S'inscrire</h2>
+
+                                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+                                    <Form>
+                                        {msg ? (<p className="notification is-danger is-size-6 p-2 mt-1">{msg}</p>) : ("")}
+                                        <div className="field">
+                                            <label htmlFor='nom' className="label">Nom:</label>
+                                            <div className="controls">
+                                                <Field name="nom" type="text" placeholder="Nom" autoComplete="off" className="input"></Field>
+                                            </div>
+                                            <ErrorMessage name="nom" component="p" className="notification is-danger is-light p-2 mt-1" />
+                                        </div>
+                                        <div className="field">
+                                            <label htmlFor='prenom' className="label">Prenom:</label>
+                                            <div className="controls">
+                                                <Field name="prenom" type="text" placeholder="Prenom" autoComplete="off" className="input"></Field>
+                                            </div>
+                                            <ErrorMessage name="prenom" component="p" className="notification is-danger is-light p-2 mt-1" />
+                                        </div>
+                                        <div className="field">
+                                            <label htmlFor='email' className="label">Email:</label>
+                                            <div className="controls">
+                                                <Field name="email" type="text" placeholder="Email" autoComplete="off" className="input"></Field>
+                                            </div>
+                                            <ErrorMessage name="email" component="p" className="notification is-danger is-light p-2 mt-1" />
+                                        </div>
+                                        <div className="field">
+                                            <label htmlFor='password' className="label">Mot de passe:</label>
+                                            <div className="controls">
+                                                <Field name="password" type="password" placeholder="******" autoComplete="off" className="input"></Field>
+                                            </div>
+                                            <ErrorMessage name="password" component="p" className="notification is-danger is-light p-2 mt-1" />
+                                        </div>
+
+                                        <div class="columns width">
+                                            <div class="column"></div>
+                                            <div class="column"><button type='submit' className="button is-danger is-outlined">Connexion</button></div>
+                                            <div class="column"></div>
+                                        </div>
+
+                                    </Form>
+                                </Formik>
                             </div>
-                            <div className="field">
-                                <label htmlFor='prenom' className="label">Prenom:</label>
-                                <div className="controls">
-                                    <Field name="prenom" type="text" placeholder="Prenom" autoComplete="off" className="input"></Field>
-                                </div>
-                                <ErrorMessage name="prenom" component="p" className="notification is-danger is-light p-2 mt-1" />
-                            </div>
-                            <div className="field">
-                                <label htmlFor='email' className="label">Email:</label>
-                                <div className="controls">
-                                    <Field name="email" type="text" placeholder="Email" autoComplete="off" className="input"></Field>
-                                </div>
-                                <ErrorMessage name="email" component="p" className="notification is-danger is-light p-2 mt-1" />
-                            </div>
-                            <div className="field">
-                                <label htmlFor='password' className="label">Mot de passe:</label>
-                                <div className="controls">
-                                    <Field name="password" type="password" placeholder="******" autoComplete="off" className="input"></Field>
-                                </div>
-                                <ErrorMessage name="password" component="p" className="notification is-danger is-light p-2 mt-1" />
-                            </div>
-                            <button type='submit' className="button is-link is-outlined mt-2">Inscription</button>
-                        </Form>
-                    </Formik>
+
+                        </div>
+
+                    </div>
+                    <div class="column"></div>
                 </div>
-            </div>
+
+            </main>
         </>
     );
 };

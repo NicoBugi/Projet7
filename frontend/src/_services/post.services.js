@@ -11,8 +11,8 @@ let getPost = (post) => {
 let createPost = (data) => {
     return Axios.post('/api/posts', data)
 }
-let deletePost = (post) => {
-    return Axios.delete('/api/posts/' + post.id)
+let deletePost = (data) => {
+    return Axios.delete('/api/posts/' + data)
 }
 let likedislikePost = (post) => {
     return Axios.post('/api/posts/' + post.id + '/like')
