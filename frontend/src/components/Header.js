@@ -57,18 +57,18 @@ const Header = () => {
                             <a className="navbar-item" href="/home">
                                 <span className="items">Accueil</span>
                             </a>
-                            <a className="navbar-item"><button onClick={addPost} className="btnplace button is-danger ">Ajouter un post</button></a>
+                            <div className="navbar-item"><button onClick={addPost} className="btnplace button is-danger ">Ajouter un post</button></div>
                         </div>
 
                         <div className="navbar-end">
                             <div className="navbar-item has-dropdown is-hoverable">
-                                <a className="navbar-link" href="https://bulma.io/documentation/overview/start/">
+                                <div className="navbar-link" href="#">
                                     <img className="is-rounded" src={LogoUser} />
-                                </a>
+                                </div>
                                 <div className="navbar-dropdown is-boxed">
-                                    <a className="navbar-item">
+                                    <div className="navbar-item">
                                         <img className="is-rounded" src={LogoConstruct} /><span className="linkpagemenu">Profil</span>
-                                    </a>
+                                    </div>
                                     <hr className="navbar-divider" />
                                     <a className="navbar-item is-active" onClick={Logout} >
                                         Déconnexion
@@ -109,12 +109,12 @@ const Header = () => {
                         className={`navbar-menu ${isActive ? "is-active" : ""}`}
                     >
                         <div className="navbar-end">
-                            <a className="navbar-item">
+                            <div className="navbar-item">
                                 <Link to="auth/login"><span className="button is-danger is-outlined">Login</span></Link>
-                            </a>
-                            <a className="navbar-item">
+                            </div>
+                            <div className="navbar-item">
                                 <Link to="auth/signup"><span className="button is-danger">Inscription</span></Link>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </nav>

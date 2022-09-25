@@ -14,19 +14,19 @@ let createPost = (data) => {
 let deletePost = (data) => {
     return Axios.delete('/api/posts/' + data)
 }
-let likedislikePost = (post) => {
-    return Axios.post('/api/posts/' + post.id + '/like')
+let likedPost = (post) => {
+    return Axios.post('/api/posts/like', post)
 }
 
-let modifyPost = (post) => {
-    return Axios.put('/api/posts/' + post.id)
+let modifyPost = (formData) => {
+    return Axios.put('/api/posts/', formData)
 }
 
 export const postService = {
     getAllPosts,
     getPost,
     createPost,
-    likedislikePost,
+    likedPost,
     deletePost,
     modifyPost
 }
