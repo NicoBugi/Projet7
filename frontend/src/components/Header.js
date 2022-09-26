@@ -1,3 +1,4 @@
+// import des modules necessaires
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -7,6 +8,7 @@ import LogoUser from '@/Images/User.png'
 import LogoConstruct from '@/Images/en-construction.png'
 import { accountService } from "@/_services/account.service";
 
+// fonction d'affichage du header
 const Header = () => {
     const navigate = useNavigate()
     const [isActive, setisActive] = React.useState(false);
@@ -24,7 +26,7 @@ const Header = () => {
         accountService.logout();
         navigate("/auth/login", { replace: true })
     }
-
+    // condition d'affichage si l'user est loggé
     if (accountService.isLogged()) {
         return (
 
@@ -81,7 +83,7 @@ const Header = () => {
             </header>
 
         );
-    } else {
+    } else { //condition si le user n'est pas loggé
         return (
             <header>
                 <nav className="navbar is-transparent" role="navigation" aria-label="main navigation">
@@ -123,4 +125,5 @@ const Header = () => {
     };
 };
 
+// export du header pour l'utiliser dans le layout
 export default Header

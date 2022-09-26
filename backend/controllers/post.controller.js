@@ -58,7 +58,6 @@ exports.getAllPost = (req, res, next) => {
 exports.getOnePost = async (req, res, next) => {
 
     const GetPost = await Post.findOne({ id: req.body.id })
-    console.log(GetPost)
     const GetUser = await Users.findOne({ _id: GetPost.userId })
 
     let PostCompiled = {
@@ -133,13 +132,10 @@ exports.modifyPost = (req, res, next) => {
 
 /* Controleur like */
 exports.likePost = (req, res, next) => {
-    console.log("je suis dans le controller")
 
     Post.findOne({ id: req.body.id })
-        // console.log("j'ai trouvé le post")
         .then(post => {
-            console.log("j'effectue ma tache")
-            /* like d'une post */
+            /*condition dislike like d'un post */
             if (!post.usersLiked.includes(req.body.userId) && req.body.likes === 1) {
 
                 Post.updateOne({ _id: req.body._id }, { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId } })

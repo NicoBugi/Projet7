@@ -1,3 +1,4 @@
+// import des modules necessaires
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import PublicRouter from '@/pages/Public/PublicRouter';
@@ -5,6 +6,7 @@ import AuthGuard from '@/_helpers/AuthGuard'
 import Layout from '@/pages/Layout'
 import AuthRouter from './pages/Auth/AuthRouter';
 
+// creation du routage principal
 function App() {
 
   return (
@@ -28,4 +30,5 @@ function App() {
   );
 }
 
+// export de la fonction app pour appel dans l'index
 export default App;

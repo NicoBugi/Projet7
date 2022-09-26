@@ -1,9 +1,11 @@
+// import des modules
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { accountService } from '@/_services/account.service';
 
+// fonction de la page signup
 const Signup = () => {
     const [msg, setMsg] = useState('');
     const navigate = useNavigate();
@@ -53,15 +55,15 @@ const Signup = () => {
     return (
         <>
             <main>
-                <div class="columns columnsMain">
-                    <div class="column"></div>
-                    <div class="column is-half">
-                        <div class="box">
+                <div className="columns columnsMain">
+                    <div className="column"></div>
+                    <div className="column is-half">
+                        <div className="box">
                             <div className="message has-background-white">
                                 <h2 className="message-header has-background-danger">S'inscrire</h2>
 
                                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-                                    <Form>
+                                    <Form className='formAuth'>
                                         {msg ? (<p className="notification is-danger is-size-6 p-2 mt-1">{msg}</p>) : ("")}
                                         <div className="field">
                                             <label htmlFor='nom' className="label">Nom:</label>
@@ -92,10 +94,10 @@ const Signup = () => {
                                             <ErrorMessage name="password" component="p" className="notification is-danger is-light p-2 mt-1" />
                                         </div>
 
-                                        <div class="columns width">
-                                            <div class="column"></div>
-                                            <div class="column"><button type='submit' className="button is-danger is-outlined">Connexion</button></div>
-                                            <div class="column"></div>
+                                        <div className="columns width">
+                                            <div className="column"></div>
+                                            <div className="column"><button type='submit' className="button is-danger is-outlined butttonAuth">Connexion</button></div>
+                                            <div className="column"></div>
                                         </div>
 
                                     </Form>
@@ -105,7 +107,7 @@ const Signup = () => {
                         </div>
 
                     </div>
-                    <div class="column"></div>
+                    <div className="column"></div>
                 </div>
 
             </main>
@@ -113,5 +115,5 @@ const Signup = () => {
     );
 };
 
-
+// export de la page pour utilisation dans le router
 export default Signup;

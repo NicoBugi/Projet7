@@ -1,3 +1,4 @@
+// import des modules necessaires
 import React, { useRef, useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +8,7 @@ import reactImageSize from 'react-image-size';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
 
+// fonction de la page addpost
 const Addpost = () => {
     const [msg, setMsg] = useState('');
     const [postImg, setPostImg] = useState();
@@ -126,7 +128,7 @@ const Addpost = () => {
                                                 </label>
                                             </div>
                                             <figure className="image is-256x256">
-                                                <img className="" key={ImagePreview} src={ImagePreview} />
+                                                <img className="" key={ImagePreview} src={ImagePreview} alt="aperçu" />
                                             </figure>
                                             <ErrorMessage name="title" component="p" className="notification is-danger is-light p-2 mt-1" />
                                         </div>
@@ -157,4 +159,5 @@ const Addpost = () => {
     );
 }
 
+// export de la page pour appel dans le router
 export default Addpost;

@@ -72,11 +72,30 @@ button {
 }
 
 .iconModify {
-    color: rgba(206, 163, 45, 0.527);
+    color: hsl(348, 86%, 61%);
 }
 
 .iconDelete {
-    color: rgba(221, 54, 54, 0.527);
+    color: black;
+}
+
+.custom-checkbox {
+    position: absolute;
+    bottom: 1em;
+    right: 3em;
+
+}
+
+.imgheight {
+    height: 4em;
+}
+
+.nbLike {
+    position: absolute;
+    bottom: 2em;
+    right: 1em;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 /*---------   AllUser Rules       ---------*/
@@ -172,21 +191,52 @@ button {
     justify-content: center;
 }
 
-.custom-checkbox {
-    position: absolute;
-    bottom: 1em;
-    right: 3em;
+.formAuth {
+    display: grid;
+    grid-row-gap: 20px;
+    margin-top: 30px;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+
+.butttonAuth {
+    margin-left: 25%;
+    margin-right: 25%;
+    justify-items: center;
+    border: none;
+    border-radius: 20px;
+    background-color: #FF5959;
+    color: white;
 
 }
 
-.imgheight {
-    height: 4em;
-}
+/*---------   Error Rules       ---------*/
 
-.nbLike {
-    position: absolute;
-    bottom: 2em;
-    right: 1em;
-    font-size: 20px;
+.titleError {
+    font-size: 50px;
     font-weight: bold;
+}
+
+.box {
+    justify-content: center;
+}
+
+.agencement {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.imagesize {
+    height: 500px;
+    object-fit: cover;
+}
+
+.ErrorPolice {
+    font-size: 30px;
+}
+
+.Errorbutton {
+    padding: 0 25%;
 }

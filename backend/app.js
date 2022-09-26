@@ -27,8 +27,10 @@ app.use((req, res, next) => {
     next();
 });
 
+// securisation des entête de requete
 app.use(helmet());
 
+// limite de requetes par minutes
 app.use(
     rateLimit({
         windowMs: 15 * 60 * 1000,

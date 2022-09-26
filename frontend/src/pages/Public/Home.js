@@ -1,3 +1,4 @@
+// import des modules necessaires
 import React, { useEffect, useRef, useState } from 'react';
 import { postService } from '@/_services/post.services';
 import { accountService } from '@/_services/account.service';
@@ -7,15 +8,15 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import HeartR from '@/Images/clipart128058.png';
 import HeartB from '@/Images/clipart116502.png';
 import { faUpload, faStarHalfStroke, faTrashAlt, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-
-
 import TimeAgo from 'timeago-react';
 import * as timeago from 'timeago.js';
 import fr from 'timeago.js/lib/lang/fr';
+
 timeago.register('fr', fr);
 
+// fonction de la page home
 const Home = () => {
-
+    // declaration des variables globales
     const [allpost, setAllpost] = useState([]);
     let [Element, setElement] = useState(false)
     const [msg, setMsg] = useState('');
@@ -28,7 +29,7 @@ const Home = () => {
 
 
     const flag = useRef(false)
-
+    // utilisation des fonction globales pour set les valeurs
     useEffect(() => {
         if (flag.current === false) {
             FunctionProfil();
@@ -132,7 +133,7 @@ const Home = () => {
             }
         }
     };
-
+    // affichage du profil connecté
     const ProfilUser = () => {
         return (
             <div className="card card-contentleft" >
@@ -167,11 +168,11 @@ const Home = () => {
             </div >
         );
     }
-
+    // affichage de tout les user
     const allusers = alluser.map((user) => {
         return (
             <li className="user" key={user._id}>
-                <img src={user.imageUrl} alt="" key={user.nom} />
+                <img src={user.imageUrl} alt="profil avatar" key={user.nom} />
                 <span className="nom" key={user.avatar}>
                     {user.role === 1 ? <FontAwesomeIcon icon={faStarHalfStroke} /> : null} {user.nom}<br />@{user.prenom}
                 </span>
@@ -203,7 +204,7 @@ const Home = () => {
         textLike.innerText = recupPost.data.post.likes
 
     })
-
+    // affichage de tout les posts
     const allposts = allpost.map((post, index) => {
         { controleLike(post.post._id) }
         const Liked = (() => {
@@ -304,9 +305,9 @@ const Home = () => {
                                         onClick={Liked}
                                     >
                                         {Element === false ? (
-                                            <img src={HeartB} className='imgheight' />
+                                            <img src={HeartB} className='imgheight' alt="unlike" />
                                         ) : (
-                                            <img src={HeartR} className='imgheight' />
+                                            <img src={HeartR} className='imgheight' alt="like" />
                                         )}
                                     </div>
 
@@ -363,7 +364,7 @@ const Home = () => {
                                                     </label>
                                                 </div>
                                                 <figure className="image is-256x256">
-                                                    <img className="" key={ImagePreview} src={ImagePreview} alt="previsualisation du post" />
+                                                    <img key={ImagePreview} src={ImagePreview} alt="previsualisation du post" />
                                                 </figure>
                                                 <ErrorMessage name="title" component="p" className="notification is-danger is-light p-2 mt-1" />
                                             </div>
@@ -443,5 +444,7 @@ const Home = () => {
         </>
     );
 };
+
+// export de la page home pour l'appeler dans le router 
 
 export default Home;

@@ -1,9 +1,10 @@
+// import des modules necessaire
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'
-
 import { Login, Signup } from '@/pages/Auth'
 import Error from '@/_utils/Error'
 
+// fonction de routage d'authentification
 const AuthRouter = () => {
     return (
 
@@ -20,5 +21,5 @@ const AuthRouter = () => {
 
     );
 };
-
+// export du sous routage pour le router principal
 export default AuthRouter;

@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config({ encoding: "latin1" });
 const fs = require("fs");
 
+/* Controleur recupération all users */
 exports.getAllUser = (req, res, next) => {
     User.find()
         .then((users) => {
@@ -47,6 +48,7 @@ exports.signup = async (req, res, next) => {
 
 };
 
+/* Controleur login */
 exports.login = async (req, res, next) => {
 
     try {

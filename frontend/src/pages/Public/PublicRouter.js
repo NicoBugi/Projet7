@@ -1,9 +1,10 @@
+// import des modules necessaires
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'
-
-import { Home, Addpost, Modifypost } from '@/pages/Public'
+import { Home, Addpost } from '@/pages/Public'
 import Error from '@/_utils/Error'
 
+// fonction de routage des pages publique
 const PublicRouter = () => {
     return (
 
@@ -15,5 +16,5 @@ const PublicRouter = () => {
 
     );
 };
-
+// export du sous routage pour le router principal
 export default PublicRouter;
