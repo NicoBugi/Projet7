@@ -4,10 +4,27 @@ pour faire fonctionner le Projet il faut :
 utiliser la commande suivante dans le dossier backend : 
 npm i express
 
+créer un fichier .env avec les parametres suivant :
+SERVER_PORT
+DBCONNECT
+ACCESS_TOKEN_SECRET
+REFRESH_TOKEN_SECRET
+
+
+
 utiliser la commande suivante dans le dossier frontend : 
 npm install
 
+cas d'erreur :
+
+npm WARN read-shrinkwrap This version of npm is compatible with lockfileVersion@1, but 
+package-lock.json was generated for lockfileVersion@2. I'll try to do my best with it!
+
+pour régler ce soucis, utiliser la commande suivante :
+npm i -g npm@latest
+
 si npm install n'install pas tout :
+
 npm install @craco/craco@alpha
 npm install react-router-dom
 npm i create-react-app
