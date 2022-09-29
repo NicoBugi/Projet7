@@ -48,7 +48,7 @@ const Home = () => {
 
     const FunctionAllPosts = async () => {
         let GetallPosts = await postService.getAllPosts();
-        setAllpost(GetallPosts.data);
+        setAllpost(GetallPosts.data.reverse());
     }
 
     const FunctionAllUser = async () => {
