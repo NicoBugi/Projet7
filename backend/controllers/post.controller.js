@@ -103,7 +103,8 @@ exports.deletePost = (req, res, next) => {
 exports.modifyPost = (req, res, next) => {
     // Recup post avec id
 
-    Post.findOne({ id: req.body.id })
+    Post.findOne().where({ _id: req.body.id })
+
         .then((post) => {
             // Enregistrement ancienne imgUrl (si nouvelle image dans modif)
             const oldUrl = post.imageUrl;
