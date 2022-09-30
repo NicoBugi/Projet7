@@ -35,7 +35,6 @@ const Login = () => {
                 .then(response => {
                     accountService.saveToken(response.data.accessToken)
                     navigate("/home", { replace: true });
-                    // { Logon === 'Logon' }
                 })
                 .catch(error => {
                     setMsg(error);

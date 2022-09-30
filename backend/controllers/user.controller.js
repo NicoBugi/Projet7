@@ -64,10 +64,10 @@ exports.login = async (req, res, next) => {
             const role = user.role;
             const createdAt = user.createdAt;
             const accessToken = jwt.sign({ userId, nom, prenom, imageUrl, email, presentation, role, createdAt }, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: '1d'
+                expiresIn: '1H'
             });
             const refreshToken = jwt.sign({ userId, nom, prenom, imageUrl, email, presentation, role, createdAt }, process.env.REFRESH_TOKEN_SECRET, {
-                expiresIn: '1d'
+                expiresIn: '1H'
             });
             await User.updateOne({ refresh_token: refreshToken }, {
                 where: {

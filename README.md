@@ -2,7 +2,10 @@
 pour faire fonctionner le Projet il faut : 
 
 utiliser la commande suivante dans le dossier backend : 
-npm i express
+npm i
+
+Lancer le back avec la commande :
+npm run start
 
 créer un fichier .env avec les parametres suivant :
 SERVER_PORT

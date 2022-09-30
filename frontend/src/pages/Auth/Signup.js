@@ -31,7 +31,7 @@ const Signup = () => {
 
         try {
             accountService.signupUser(data)
-                .then(response => {
+                .then(() => {
                     accountService.loginUser(data)
                         .then(response => {
                             accountService.saveToken(response.data.accessToken)

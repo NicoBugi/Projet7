@@ -21,7 +21,6 @@ timeago.register('fr', fr);
 // fonction de la page home
 const Home = () => {
     // declaration des variables globales
-    let [liked, setLiked] = useState(false);
     const [allpost, setAllpost] = useState([]);
     const [msg, setMsg] = useState('');
     const [postImg, setPostImg] = useState();
