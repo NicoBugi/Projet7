@@ -5,8 +5,12 @@ import { accountService } from '@/_services/account.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import reactImageSize from 'react-image-size';
 import { Formik, Form, Field, ErrorMessage } from "formik";
+
+
 import HeartR from '@/Images/clipart128058.png';
 import HeartB from '@/Images/clipart116502.png';
+
+
 import { faUpload, faStarHalfStroke, faTrashAlt, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import TimeAgo from 'timeago-react';
 import * as timeago from 'timeago.js';
@@ -17,8 +21,8 @@ timeago.register('fr', fr);
 // fonction de la page home
 const Home = () => {
     // declaration des variables globales
+    let [liked, setLiked] = useState(false);
     const [allpost, setAllpost] = useState([]);
-    let [Element, setElement] = useState(false)
     const [msg, setMsg] = useState('');
     const [postImg, setPostImg] = useState();
     const [ImagePreview, setImagePreview] = useState();
@@ -35,6 +39,8 @@ const Home = () => {
             FunctionProfil();
             FunctionAllPosts();
             FunctionAllUser();
+
+
 
         }
 
@@ -83,8 +89,6 @@ const Home = () => {
     const initialValues = {
         text: "",
     }
-
-
 
     const onSubmitModif = async (data) => {
         const formData = new FormData();
@@ -182,88 +186,82 @@ const Home = () => {
 
     });
 
-
-    const controleLike = (async (postid) => {
-        let recupPost = await postService.getPost(postid)
-
-        if (recupPost.data.post.usersLiked.includes(profil.userId)) {
-            Element = true
-            setElement(Element)
-        } else if (!recupPost.data.post.usersLiked.includes(profil.userId)) {
-            Element = false
-            setElement(Element)
-        }
-        let textLike = document.getElementsByClassName("nbLike")[0]
-        textLike.innerText = recupPost.data.post.likes
-
-    })
-
-    const affichageLike = (async (postid) => {
-        let recupPost = await postService.getPost(postid)
-        let textLike = document.getElementsByClassName("nbLike")[0]
-        textLike.innerText = recupPost.data.post.likes
-
-    })
     // affichage de tout les posts
     const allposts = allpost.map((post, index) => {
-        { controleLike(post.post._id) }
-        const Liked = (() => {
 
-            if (Element === false) {
-                console.log("j'aime")
-                let data = {
-                    _id: post.post._id,
-                    likes: 1,
-                    userId: profil.userId
-                }
+        localStorage.setItem("likes" + post.post._id, post.post.likes)
+        localStorage.setItem("liste" + post.post._id, post.post.usersLiked)
 
-                try {
-                    postService.likedPost(data)
-                        .then(
-                            setElement(!Element),
-                            affichageLike(post.post._id)
+        const like = async (dataid) => {
 
-                        )
-                        .catch(error => {
-                            setMsg(error);
-                        })
-                } catch (error) {
-                    if (error.response) {
-                        setMsg(error.response.data.msg);
-                    }
-                }
+            let data = {
+                id: dataid,
+                likes: 1,
+                userId: profil.userId
             }
-            else if (Element === true) {
-                console.log("j'aime pas")
-                let data = {
-                    _id: post.post._id,
-                    likes: -1,
-                    userId: profil.userId
-                }
 
+            //Update MangoDB pour les likes
+            postService.likedPost(data);
 
-                try {
-                    postService.likedPost(data)
-                        .then(
-                            setElement(!Element),
-
-                            affichageLike(post.post._id)
-
-                        )
-                        .catch(error => {
-                            setMsg(error);
-                        })
-
-                } catch (error) {
-                    if (error.response) {
-                        setMsg(error.response.data.msg);
-                    }
-                }
+            const controlvalue = localStorage.getItem("liste" + post.post._id)
+            if (controlvalue.includes(profil.userId)) {
+                //Update LocalStorage pour les likes
+                localStorage.setItem("likes" + dataid, post.post.likes)
             }
-        })
+            else {
+                localStorage.setItem("likes" + dataid, post.post.likes + 1)
+            }
+            //Suppréssion du contenu de la div likeContainer pour refresh la view du coeur
+            let divASup = document.getElementById("likecontainer" + dataid);
+            divASup.innerHTML = `<img id="unlike${dataid}" src=${HeartR} alt="unlike"/>`;
+            document.getElementById("unlike" + dataid).onclick = function () {
+                unlike(post.post._id)
+                //Update LocalStorage pour les likes
+
+            }
+            let ValeurUpdateDuLike = localStorage.getItem("likes" + dataid)
+            console.log(ValeurUpdateDuLike)
+            document.getElementById("nbLike" + post.post._id).innerHTML = ValeurUpdateDuLike
+        };
+
+        const unlike = (dataid) => {
+
+            let data = {
+                id: dataid,
+                likes: -1,
+                userId: profil.userId
+            }
+
+            //Update MangoDB pour les likes
+            postService.likedPost(data);
+
+            const controlvalue = localStorage.getItem("liste" + post.post._id)
+            if (controlvalue.includes(profil.userId)) {
+                //Update LocalStorage pour les likes
+                localStorage.setItem("likes" + dataid, post.post.likes - 1)
+            }
+            else {
+                localStorage.setItem("likes" + dataid, post.post.likes)
+            }
+
+
+            let divASup = document.getElementById("likecontainer" + dataid);
+            divASup.innerHTML = `<img id="like${dataid}" src=${HeartB} alt="like" />`;
+            document.getElementById("like" + dataid).onclick = function () {
+                like(post.post._id)
+                //Update LocalStorage pour les likes
+
+            }
+
+            let ValeurUpdateDuLike = localStorage.getItem("likes" + dataid)
+            console.log(ValeurUpdateDuLike)
+            document.getElementById("nbLike" + post.post._id).innerHTML = ValeurUpdateDuLike
+        };
+
         return (
 
-            <li className="post" key={post.post._id}>
+
+            <li className="post" id={post.post._id} key={post.post._id}>
 
                 <div className="card">
                     <div className="card-image">
@@ -299,23 +297,18 @@ const Home = () => {
                                 <p className="subtitle is-6">@{post.user.prenom}</p>
 
                                 <label className="custom-checkbox">
-                                    <div
-                                        className="container"
-
-                                        onClick={Liked}
-                                    >
-                                        {Element === false ? (
-                                            <img src={HeartB} className='imgheight' alt="unlike" />
-                                        ) : (
-                                            <img src={HeartR} className='imgheight' alt="like" />
-                                        )}
+                                    <div className="container">
+                                        <div id={"likecontainer" + post.post._id} className="like-container">
+                                            {!post.post.usersLiked.includes(profil.userId) ? <img src={HeartB} id={"like" + post.post._id} alt="like" onClick={() => like(post.post._id)} /> : <img id={"unlike" + post.post._id} src={HeartR} alt="unlike" onClick={() => unlike(post.post._id)} />}
+                                        </div>
+                                        <div className='nbLike' id={"nbLike" + post.post._id}>
+                                            {post.post.likes}
+                                        </div>
                                     </div>
 
                                 </label>
 
-                                <div className='nbLike'>
-                                    {/* {nbLike} */}
-                                </div>
+
 
                             </div>
                         </div>

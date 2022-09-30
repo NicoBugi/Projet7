@@ -80,24 +80,6 @@ button {
     color: black;
 }
 
-.custom-checkbox {
-    position: absolute;
-    bottom: 1em;
-    right: 3em;
-
-}
-
-.imgheight {
-    height: 4em;
-}
-
-.nbLike {
-    position: absolute;
-    bottom: 2em;
-    right: 1em;
-    font-size: 20px;
-    font-weight: bold;
-}
 
 /*---------   AllUser Rules       ---------*/
 .centerImageprofil {
@@ -240,4 +222,27 @@ button {
 
 .Errorbutton {
     padding: 0 25%;
+}
+
+/*---------   Likes Rules       ---------*/
+
+.like-container {
+    width: 100%;
+    display: flex;
+}
+
+.like-container img {
+    height: 3em;
+    object-fit: cover;
+}
+
+.like-container span {
+    font-size: 2em;
+}
+
+
+.custom-checkbox {
+    position: absolute;
+    bottom: 2em;
+    right: 3em;
 }

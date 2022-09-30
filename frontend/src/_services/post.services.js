@@ -12,7 +12,7 @@ let getAllPosts = () => {
 
 // fonction recuperation d'un post
 let getPost = (post) => {
-    return Axios.get('/api/posts/' + post.id)
+    return Axios.get('/api/posts/', post)
 }
 
 

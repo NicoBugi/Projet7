@@ -102,7 +102,8 @@ exports.deletePost = (req, res, next) => {
 /* Controleur modification post */
 exports.modifyPost = (req, res, next) => {
     // Recup post avec id
-    Post.findOne({ _id: req.body.id })
+
+    Post.findOne({ id: req.body.id })
         .then((post) => {
             // Enregistrement ancienne imgUrl (si nouvelle image dans modif)
             const oldUrl = post.imageUrl;
@@ -133,19 +134,21 @@ exports.modifyPost = (req, res, next) => {
 /* Controleur like */
 exports.likePost = (req, res, next) => {
 
-    Post.findOne({ id: req.body.id })
+    Post.findOne().where({ _id: req.body.id })
         .then(post => {
             /*condition dislike like d'un post */
             if (!post.usersLiked.includes(req.body.userId) && req.body.likes === 1) {
 
-                Post.updateOne({ _id: req.body._id }, { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId } })
-                    .then(() => res.status(200).json({ message: 'post liked !' }))
+                Post.updateOne({ _id: req.body.id }, { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId } })
+                    .then(() => res.status(200).json({ message: 'post unliked !' }))
                     .catch(error => res.status(400).json({ error }));
             }
             if (post.usersLiked.includes(req.body.userId) && req.body.likes === -1) {
-                Post.updateOne({ id: req.body.id }, { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId } })
+                Post.updateOne({ _id: req.body.id }, { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId } })
                     .then(() => res.status(200).json({ message: 'post unliked !' }))
                     .catch(error => res.status(400).json({ error }));
+
+
             }
 
 
